@@ -1,35 +1,39 @@
 ﻿#include <iostream>
 #include <time.h>
-#define arrlength 10
-#define arrfrom 2
-#define arrto 103
+#include <string>
+#define arrlength 5
+
 
 
 int main()
-{
-	int temp = NULL;
-	//создаем массив из случайных чисел
-	srand(time(NULL));
-	int Random_Array[arrlength]{};
-	for (int i{ 0 }; i <= arrlength; i++) {
-		Random_Array[i] = arrfrom + rand() % (arrto + 1);
-		std::cout << Random_Array[i] << "\t";
+{	
+	std::string temp = "";
+	std::string Numbers[]
+	{
+		"23 - 45 - 67",
+		"54 - 25 -25",
+		"74 - 47 - 90",
+		"34 - 75 - 85",
+		"63 - 57 - 65"
+	};
+	//вывод исходного массива
+	for (int i{ 0 }; i < arrlength; i++) {
+		std::cout << "\n" << Numbers[i];
 	}
-
 	//алгоритм сортировки
-	for (int i{ 0 }; i <= arrlength - 1; i++) {
+	for (int i{ 0 }; i < arrlength - 1; i++) {
 		int max_ind = i;
-		for (int j{ i }; j <= arrlength; j++) {
-			if (Random_Array[j] < Random_Array[max_ind]) {
-				temp = Random_Array[j];
-				Random_Array[j] = Random_Array[i];
-				Random_Array[i] = temp;
+		for (int j{ i }; j < arrlength; j++) {
+			if (Numbers[j] < Numbers[max_ind]) {
+				temp = Numbers[j];
+				Numbers[j] = Numbers[i];
+				Numbers[i] = temp;
 			}
 		}
 	}
 	//вывод полученного массива
-	std::cout << "\n";
-	for (int i{ 0 }; i <= arrlength; i++) {
-		std::cout << Random_Array[i] << "\t";
+	std::cout << "\n\n\n\n";
+	for (int i{ 0 }; i < arrlength; i++) {
+		std::cout << Numbers[i] << "\n";
 	}
 }
