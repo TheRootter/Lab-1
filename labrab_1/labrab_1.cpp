@@ -1,8 +1,8 @@
 ﻿#include <iostream>
 #include <time.h>
 #define arrlength 10
-#define arrfrom 0
-#define arrto 100
+#define arrfrom 2
+#define arrto 103
 
 
 int main()
@@ -20,7 +20,7 @@ int main()
 	for (int i{ 0 }; i <= arrlength - 1; i++) {
 		int max_ind = i;
 		for (int j{ i }; j <= arrlength; j++) {
-			if (Random_Array[j] > Random_Array[max_ind]) {
+			if (Random_Array[j] < Random_Array[max_ind]) {
 				temp = Random_Array[j];
 				Random_Array[j] = Random_Array[i];
 				Random_Array[i] = temp;
