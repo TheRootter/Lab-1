@@ -1,28 +1,20 @@
 ﻿#include <iostream>
-#define A 26
-#define B 20
+#define N 64890
+
 //рекурсивная функция
-int foo(int n, int end) {
-	
-	std::cout << n << "\n";
-	//порядок убывания
-	if (n < end) {
-		n++;
-		if (n <= end) {
-			foo(n, end);
-		}
+static int foo(int n, int sum) {
+	if (n != 0) {
+		sum = sum + (n % 10);
+		n = n / 10;
+		foo(n, sum);
 	}
-	//порядок убывания
-	else {
-		n--;
-		if (n >= end) {
-			foo(n, end);
-		}
-	}
-	return 0;
+	else
+
+	return sum;
 }
 
 int main() {
-
-	foo(A, B);
+	
+	std:: cout  << "number sum of "<< N << " is\t"<<foo(N, 0);
+	return 0;
 }
