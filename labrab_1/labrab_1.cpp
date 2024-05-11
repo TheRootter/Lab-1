@@ -1,20 +1,24 @@
 ﻿#include <iostream>
-#define N 64890
+#define N 46382367
+void foo(int n, int i=2) {
+	if (i <= sqrt(n)) {
+		if (n % i == 0) {
+			std::cout << i << "\n";
+			n = n / i;
+			foo(n, i);
+		}
+		else { i++; foo(n, i); }
 
-//рекурсивная функция
-static int foo(int n, int sum) {
-	if (n != 0) {
-		sum = sum + (n % 10);
-		n = n / 10;
-		foo(n, sum);
 	}
-	else
-
-	return sum;
+	else if (i == n) { std::cout << i; }
+	else { i++; foo(n, i); }
+	return;
 }
 
-int main() {
-	
-	std:: cout  << "number sum of "<< N << " is\t"<<foo(N, 0);
-	return 0;
+
+
+int main()
+{
+	foo(N);
+return 0;
 }
