@@ -1,42 +1,34 @@
 ﻿#include <iostream>
-#define END 100
-#define START 50
-#define length 1000
+#define END 61
+#define START 5
+#define length 10
+#define width 2
 
-int swap(int first, int second, int* pArray) {
-	
-	int temp = pArray[second];
-	pArray[second] = pArray[first];
-	pArray[first] = temp;
-	return 0;
-}
-//быстрая сортировка
-
-int QS(int left , int right, int* pArray) {
+int QS(int left, int right, int pArray[][width]) {
 	int temp{ NULL };
 	int pivot;
 	int pivot_index;
 	int left_wall = left;
 	int right_wall = right;
-        pivot = pArray[left];
+        pivot = pArray[left][0];
         while (left < right)
         {
-            while ((pArray[right] > pivot) && (left < right))
+            while ((pArray[right][0] > pivot) && (left < right))
                 right--;
             if (left != right) 
             {
-                pArray[left] = pArray[right];
+                pArray[left][0] = pArray[right][0];
                 left++; 
             }
-            while ((pArray[left] < pivot) && (left < right))
+            while ((pArray[left][0] < pivot) && (left < right))
                 left++; 
             if (left != right) 
             {
-                pArray[right] = pArray[left]; 
+                pArray[right][0] = pArray[left][0];
                 right--; 
             }
         }
-        pArray[left] = pivot; 
+        pArray[left][0] = pivot;
         pivot_index = left;
         left = left_wall;
         right = right_wall;
@@ -49,15 +41,27 @@ int QS(int left , int right, int* pArray) {
 
 
 int main() {
-	int Array[length]{};
-	for (int i{ 0 }; i < length; i++) {
-		Array[i] = rand() % (END - START +1)+ START;
-		std::cout << Array[i] << "\t";
-	}
-	QS(0, length-1, Array);
-	std::cout << "\n\n\n\n";
-	for (int i{ 0 }; i < length; i++) {
-		std::cout << Array[i] << "\t";
-	}
-	
+    int Array[length][width]{};
+    for (int i{ 0 }; i < length; i++) {
+        for (int j{ 0 }; j < 2; j++) {
+            Array[i][j] = rand() % (END - START + 1) + START;
+            if (j != 1) {
+                std::cout << Array[i][j] << "\t";
+            }
+            else
+                std::cout << Array[i][j] << "\n";
+        }
+    }
+
+    QS(0, length - 1, Array);
+    std::cout << "\n\n\n\n";
+    for (int i{ 0 }; i < length; i++) {
+        for (int j{ 0 }; j < 2; j++) {
+            if (j != 1) {
+                std::cout << Array[i][j] << "\t";
+            }
+            else
+                std::cout << Array[i][j] << "\n";
+        }
+    }
 }
