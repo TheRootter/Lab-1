@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #define END 100
 #define START 50
-#define length 10
+#define length 1000
 
 int swap(int first, int second, int* pArray) {
 	
