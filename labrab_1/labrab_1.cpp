@@ -1,67 +1,43 @@
 ﻿#include <iostream>
-#define END 61
-#define START 5
+#include <algorithm>
+#include <string>
 #define length 10
-#define width 2
 
-int QS(int left, int right, int pArray[][width]) {
-	int temp{ NULL };
-	int pivot;
-	int pivot_index;
-	int left_wall = left;
-	int right_wall = right;
-        pivot = pArray[left][0];
-        while (left < right)
-        {
-            while ((pArray[right][0] > pivot) && (left < right))
-                right--;
-            if (left != right) 
-            {
-                pArray[left][0] = pArray[right][0];
-                left++; 
-            }
-            while ((pArray[left][0] < pivot) && (left < right))
-                left++; 
-            if (left != right) 
-            {
-                pArray[right][0] = pArray[left][0];
-                right--; 
-            }
-        }
-        pArray[left][0] = pivot;
-        pivot_index = left;
-        left = left_wall;
-        right = right_wall;
-        if (left < pivot_index) // Рекурсия
-            QS(left, pivot_index - 1, pArray);
-        if (right > pivot_index)
-            QS(pivot_index + 1, right, pArray);
-        return 0;
-    }
-
+int compare(const void* arg1, const void* arg2) {
+    std::string* s1 = (std::string*)arg1; //приведение типа
+    std::string* s2 = (std::string*)arg2;
+    return _stricmp(s1->c_str(), s2->c_str());
+}
 
 int main() {
-    int Array[length][width]{};
-    for (int i{ 0 }; i < length; i++) {
-        for (int j{ 0 }; j < 2; j++) {
-            Array[i][j] = rand() % (END - START + 1) + START;
-            if (j != 1) {
-                std::cout << Array[i][j] << "\t";
-            }
-            else
-                std::cout << Array[i][j] << "\n";
-        }
+    const int size = length;
+    std::string student_list[size] = {
+        "Judith Brown",
+        "Jason Roberts",
+        "Diane Miller",
+        "Jason Rodriguez",
+        "Joseph Thomas",
+        "Christopher Martin",
+        "Sarah Kelley",
+        "Barry King",
+        "Danielle Turner",
+        "Wanda Kelly"
+    };
+
+    // вывод начального массива
+    std::cout << "Unsorted list:\n";
+    for (const auto& student : student_list) {
+        std::cout << student << "\n";
     }
 
-    QS(0, length - 1, Array);
-    std::cout << "\n\n\n\n";
-    for (int i{ 0 }; i < length; i++) {
-        for (int j{ 0 }; j < 2; j++) {
-            if (j != 1) {
-                std::cout << Array[i][j] << "\t";
-            }
-            else
-                std::cout << Array[i][j] << "\n";
-        }
+    // сортировка стандартной функцией
+    std::qsort(student_list, size, sizeof(std::string), compare);
+
+    // вывод списка
+    std::cout << "\nSorted list:\n";
+    for (const auto& student : student_list) {
+        std::cout << student << "\n";
     }
+
+    return 0;
 }
