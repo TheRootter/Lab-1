@@ -1,35 +1,64 @@
 ﻿#include <iostream>
-#include <time.h>
-#define arrlength 10
-#define arrfrom 2
-#define arrto 103
-
-
+#include <queue> // очередь
+#include <stack> // стек
+using namespace std;
+struct Edge {
+    int begin;
+    int end;
+};
 int main()
 {
-	int temp = NULL;
-	//создаем массив из случайных чисел
-	srand(time(NULL));
-	int Random_Array[arrlength]{};
-	for (int i{ 0 }; i <= arrlength; i++) {
-		Random_Array[i] = arrfrom + rand() % (arrto + 1);
-		std::cout << Random_Array[i] << "\t";
-	}
-
-	//алгоритм сортировки
-	for (int i{ 0 }; i <= arrlength - 1; i++) {
-		int min_ind = i;
-		for (int j{ i }; j <= arrlength; j++) {
-			if (Random_Array[j] < Random_Array[min_ind]) {
-				temp = Random_Array[j];
-				Random_Array[j] = Random_Array[i];
-				Random_Array[i] = temp;
-			}
-		}
-	}
-	//вывод полученного массива
-	std::cout << "\n";
-	for (int i{ 0 }; i <= arrlength; i++) {
-		std::cout << Random_Array[i] << "\t";
-	}
+    system("chcp 1251");
+    system("cls");
+    queue<int> Queue;
+    stack<Edge> Edges;
+    int req;
+    Edge e;
+    int mas[11][11] = {
+        {0,	0,	0,	0,	0,	0,	0,	0,	0,	0,	1},
+        {0,	0,	1,	1,	0,	0,	0,	0,	0,	0,	1, },
+        {0,	1,	0,	0,	0,	0,	0,	0,	0,	1,	0},
+        {0,	1,	0,	0,	0,	0,	1,	0,	0,	0,	1},
+        {0,	0,	0,	0,	0,	0,	1,	0,	0,	0,	1},
+        {0,	0,	0,	0,	0,	0,	1,	1,	0,	0,	0},
+        {0,	0,	0,	1,	1,	1,	0,	1,	0,	1,	0},
+        {0,	0,	0,	0,	0,	1,	1,	0,	1,	0,	0},
+        {0,	0,	0,	0,	0,	0,	0,	1,	0,	1,	0},
+        {0,	0,	1,	0,	0,	0,	1,	1,	0,	0,	0},
+        {1,	1,	0,	1,	1,	0,	0,	0,	0,	0,	0}, };
+    int nodes[11]; // вершины графа
+    for (int i = 0; i < 11; i++) // исходно все вершины равны 0
+        nodes[i] = 0;
+    cout << "N = "; cin >> req; req--;
+    Queue.push(10); // помещаем в очередь первую вершину
+    while (!Queue.empty())
+    {
+        int node = Queue.front(); // извлекаем вершину
+        Queue.pop();
+        nodes[node] = 2; // отмечаем ее как посещенную
+        for (int j = 0; j < 11; j++)
+        {
+            if (mas[node][j] == 1 && nodes[j] == 0)
+            { // если вершина смежная и не обнаружена
+                Queue.push(j); // добавляем ее в очередь
+                nodes[j] = 1; // отмечаем вершину как обнаруженную
+                e.begin = node; e.end = j;
+                Edges.push(e);
+                if (node == req) break;
+            }
+        }
+        cout << node + 1 << endl; // выводим номер вершины
+    }
+    cout << "Путь до вершины " << req + 1 << endl;
+    cout << req + 1;
+    while (!Edges.empty()) {
+        e = Edges.top();
+        Edges.pop();
+        if (e.end == req) {
+            req = e.begin;
+            cout << " <- " << req + 1;
+        }
+    }
+    cin.get(); cin.get();
+    return 0;
 }
