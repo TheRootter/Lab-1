@@ -1,35 +1,71 @@
 ﻿#include <iostream>
+#include <fstream>
 #include <time.h>
-#define arrlength 10
-#define arrfrom 0
-#define arrto 100
+#define input_length 106
+using namespace std;
 
-
-int main()
-{
-	int temp = NULL;
-	//создаем массив из случайных чисел
-	srand(time(NULL));
-	int Random_Array[arrlength]{};
-	for (int i{ 0 }; i <= arrlength; i++) {
-		Random_Array[i] = arrfrom + rand() % (arrto + 1);
-		std::cout << Random_Array[i] << "\t";
+//int main() {
+//
+//	// открываем файл для записи в него текста
+//	ofstream file("input.txt", ios_base::out);
+//	srand(time(null));
+//	if (file.is_open()) { // проверяем открыт ли сам файл
+//		for (int i{ 0 }; i < 106; i++) {
+//			if (rand() % 2 == 0) {
+//				file << rand() % 230 << "\n";
+//			}
+//			else { file <<-231 + rand() % 230 << "\n"; }
+//		}
+//		
+//		file.close(); // закрываем файл
+//	}
+//
+//	cin.get();
+//	return 0;
+//}
+int hash_function(int number) {
+	int index = abs(number % 232);
+	return index;
+}
+int main() {
+	int temp = 0;
+	int array[input_length];
+	int hash_table[232];
+	for (int i{ 0 }; i < 232; i++) {
+		hash_table[i] = NULL;
 	}
 
-	//алгоритм сортировки
-	for (int i{ 0 }; i <= arrlength - 1; i++) {
-		int max_ind = i;
-		for (int j{ i }; j <= arrlength; j++) {
-			if (Random_Array[j] > Random_Array[max_ind]) {
-				temp = Random_Array[j];
-				Random_Array[j] = Random_Array[i];
-				Random_Array[i] = temp;
-			}
+	//заносим данные из файла в массив.
+	ifstream file("Input.txt", ios_base::in);
+	if (file.is_open()) {
+		for (int i{ 0 }; i < input_length; i++) {
+			file >> temp;
+			array[i] = temp;
+		}
+		file.close();
+	}
+	for (int i{ 0 }; i < input_length; i++) {
+		std::cout << array[i] << endl;
+	}
+
+	//обрабатываем данные
+	for (int i{ 0 }; i < input_length; i++) {
+		if (array[i] > 0) {
+			hash_table[hash_function(array[i])] = array[i];
+		}
+		else if (array[i] < 0) {
+			hash_table[hash_function(array[i])] = NULL;
+		}
+		else if (array[i] == 0) {
+			break;
+		}
+		}
+	ofstream out("Output.txt",std::ios_base::out);
+
+	for (int i{ 0 }; i < 231; i++) {
+		if (hash_table[i] != NULL) {
+			out << hash_table[i] << endl;
 		}
 	}
-	//вывод полученного массива
-	std::cout << "\n";
-	for (int i{ 0 }; i <= arrlength; i++) {
-		std::cout << Random_Array[i] << "\t";
-	}
+	return 0;
 }
